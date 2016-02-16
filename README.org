@@ -53,4 +53,68 @@ In reality you only run the commands in between, i.e. =lein cljsbuild once=:
 
    this runs, with warnings
 
-   
+** make =cljsbuild once= do something
+
+*** add a src directory
+
+    and we're not going to name it the same thing, because we're rebellious.
+
+    #+BEGIN_SRC sh
+    mkdir -p src/cljs/something_something
+    tree src
+    #+END_SRC
+
+    #+RESULTS:
+    : src
+    : └── cljs
+    :     └── something_something
+    : 
+    : 2 directories, 0 files
+
+*** add a source file
+
+    #+BEGIN_SRC sh
+    cat src/cljs/something_something/core.cljs
+    #+END_SRC
+
+    #+RESULTS:
+    : (ns something-something.core
+    :   )
+    : 
+    : (enable-console-print!)
+    : 
+    : (prn "HELLO WORLD!")
+
+    
+*** =cljsbuild=
+
+    #+BEGIN_SRC sh
+    lein cljsbuild once
+    #+END_SRC
+
+    #+RESULTS:
+    : Compiling ClojureScript...
+    : Compiling "hello_my_output/main_file.js" from ["src"]...
+    : Successfully compiled "hello_my_output/main_file.js" in 0.991 seconds.
+
+*** create an html file to use the output
+
+    #+BEGIN_SRC sh
+    cat index.html
+    #+END_SRC
+
+    #+RESULTS:
+    #+begin_example
+    <!DOCTYPE html>
+    <html>
+        <head>
+            <title>blah-project</title>
+            <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        </head>
+        <body>
+            <script src="hello_my_output/main_file.js" type="text/javascript"></script>
+        </body>
+    </html>
+#+end_example
+
+    

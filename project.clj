@@ -8,6 +8,8 @@
   :plugins [[lein-cljsbuild "1.1.1"]
             [lein-npm "0.6.1"]]
 
+  :npm {:dependencies [[jquery "2.2.0"]]}
+  
   :cljsbuild {:builds {:app
                        {:source-paths ["src"]
                         :compiler {:main something-something.core

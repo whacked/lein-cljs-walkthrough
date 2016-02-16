@@ -153,6 +153,65 @@ In reality you only run the commands in between, i.e. =lein cljsbuild once=:
    drwxrwxr-x 3 4096 Feb 16 10:46 target
 #+end_example
 
+** instead of =lein npm install jquery= we should put the jquery dep directly into file:project.clj
+
+*** (first we remove the =node_modules= dir from the previous step)
+
+    #+BEGIN_SRC sh
+    ls -lng
+    #+END_SRC
+ 
+    #+RESULTS:
+    : total 36
+    : drwxrwxr-x 5 4096 Feb 16 10:42 hello_my_output
+    : -rw-rw-r-- 1  275 Feb 16 10:44 index.html
+    : -rw-rw-r-- 1  843 Feb 16 11:01 project.clj
+    : -rw-rw-r-- 1 6223 Feb 16 11:02 README.org
+    : drwxrwxr-x 3 4096 Feb 16 10:37 src
+    : drwxrwxr-x 4 4096 Feb 16 10:55 target
+
+*** confirm the =:npm= section is added
+
+    #+BEGIN_SRC sh
+    git diff project.clj
+    #+END_SRC
+ 
+    #+RESULTS:
+    #+begin_example
+    diff --git a/project.clj b/project.clj
+    index 11bbbb3..5d430a7 100644
+    --- a/project.clj
+    +++ b/project.clj
+    @@ -8,6 +8,8 @@
+       :plugins [[lein-cljsbuild "1.1.1"]
+                 [lein-npm "0.6.1"]]
+ 
+    +  :npm {:dependencies [[jquery "2.2.0"]]}
+    +  
+       :cljsbuild {:builds {:app
+                            {:source-paths ["src"]
+                             :compiler {:main something-something.core
+#+end_example
+
+    reinstall
+ 
+    #+BEGIN_SRC sh
+    lein npm install
+    #+END_SRC
+ 
+    #+RESULTS:
+    : jquery@2.2.0 node_modules/jquery
+
+*** and reconfirm jquery is there
+
+    #+BEGIN_SRC sh
+    ls -lng node_modules
+    #+END_SRC
+ 
+    #+RESULTS:
+    : total 4
+    : drwxrwxr-x 4 1000 4096 Feb 16 11:03 jquery
+
 ** add =:foreign-libs= section for jQuery
 
    here's what we change in [[file:project.clj]]

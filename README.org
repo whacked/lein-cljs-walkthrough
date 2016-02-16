@@ -1,5 +1,9 @@
 #+PROPERTY: header-args:sh :results output
 
+* what is this?
+
+  we go from a plain =lein new= to a working =lein cljsbuild once= project, documenting *each step*
+
 * init
 
 #+BEGIN_SRC sh
@@ -24,3 +28,29 @@ In reality you only run the commands in between, i.e. =lein cljsbuild once=:
   #+RESULTS:
   : 'cljsbuild' is not a task. See 'lein help'.
 
+** update [[project.clj]] with minimal cljsbuild dependencies
+
+   #+BEGIN_SRC sh
+   lein cljsbuild once
+   #+END_SRC
+
+   #+RESULTS:
+   #+begin_example
+   WARNING: no :cljsbuild entry found in project definition.
+   --------------------------------------------------------------------------------
+   WARNING: your :cljsbuild configuration is in a deprecated format.  It has been
+   automatically converted it to the new format, which will be printed below.
+   It is recommended that you update your :cljsbuild configuration ASAP.
+   --------------------------------------------------------------------------------
+   :cljsbuild
+   {:builds []}
+   --------------------------------------------------------------------------------
+   See https://github.com/emezeske/lein-cljsbuild/blob/master/README.md
+   for details on the new format.
+   --------------------------------------------------------------------------------
+   Compiling ClojureScript...
+#+end_example
+
+   this runs, with warnings
+
+   

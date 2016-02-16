@@ -11,5 +11,7 @@
   :cljsbuild {:builds {:app
                        {:source-paths ["src"]
                         :compiler {:main something-something.core
-                                   :output-to "hello_my_output/main_file.js"}}}}
+                                   :output-to "hello_my_output/main_file.js"
+                                   :foreign-libs [{:file "node_modules/jquery/dist/jquery.js"
+                                                   :provides ["jQuery"]}]}}}}
   )

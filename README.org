@@ -4,6 +4,9 @@
 
   we go from a plain =lein new= to a working =lein cljsbuild once= project, documenting *each step*
 
+  for detailed details see
+  https://github.com/emezeske/lein-cljsbuild/blob/master/sample.project.clj
+
 * init
 
 #+BEGIN_SRC sh
@@ -131,3 +134,90 @@ In reality you only run the commands in between, i.e. =lein cljsbuild once=:
    : jquery@2.2.0 node_modules/jquery
 
    now we want to reference it in [[file:src/cljs/something_something/core.cljs]]
+
+   note that by default, =lein npm= installs to the =./node_modules= directory:
+
+   #+BEGIN_SRC sh
+   ls -lng
+   #+END_SRC
+
+   #+RESULTS:
+   #+begin_example
+   total 36
+   drwxrwxr-x 5 4096 Feb 16 10:42 hello_my_output
+   -rw-rw-r-- 1  275 Feb 16 10:44 index.html
+   drwxrwxr-x 3 4096 Feb 16 10:47 node_modules
+   -rw-rw-r-- 1  630 Feb 16 10:46 project.clj
+   -rw-rw-r-- 1 3520 Feb 16 10:50 README.org
+   drwxrwxr-x 3 4096 Feb 16 10:37 src
+   drwxrwxr-x 3 4096 Feb 16 10:46 target
+#+end_example
+
+** add =:foreign-libs= section for jQuery
+
+   here's what we change in [[file:project.clj]]
+   
+   #+BEGIN_SRC sh
+   git diff project.clj
+   #+END_SRC
+
+   #+RESULTS:
+   #+begin_example
+   diff --git a/project.clj b/project.clj
+   index 4783693..11bbbb3 100644
+   --- a/project.clj
+   +++ b/project.clj
+   @@ -11,5 +11,7 @@
+      :cljsbuild {:builds {:app
+                           {:source-paths ["src"]
+                            :compiler {:main something-something.core
+   -                                   :output-to "hello_my_output/main_file.js"}}}}
+   +                                   :output-to "hello_my_output/main_file.js"
+   +                                   :foreign-libs [{:file "node_modules/jquery/dist/jquery.js"
+   +                                                   :provides ["jQuery"]}]}}}}
+      )
+#+end_example
+
+** reference it in [[file:src/cljs/something_something/core.cljs]]
+
+   #+BEGIN_SRC sh
+   git diff src/cljs/something_something/core.cljs
+   #+END_SRC
+
+   #+RESULTS:
+   #+begin_example
+   diff --git a/src/cljs/something_something/core.cljs b/src/cljs/something_something/core.cljs
+   index 3ea2033..406f1bc 100644
+   --- a/src/cljs/something_something/core.cljs
+   +++ b/src/cljs/something_something/core.cljs
+   @@ -1,6 +1,11 @@
+    (ns something-something.core
+   -  )
+   +  (:require [jQuery]))
+
+    (enable-console-print!)
+
+    (prn "HELLO WORLD!")
+   +
+   +(js/$ (fn []
+   +        (-> (js/$ "<div>")
+   +            (.appendTo (js/$ js/document.body))
+   +            (.html "HELLO FROM JQUERY!"))))
+#+end_example
+
+** rebuild
+   
+   #+BEGIN_SRC sh
+   lein cljsbuild once
+   #+END_SRC
+
+   #+RESULTS:
+   : Compiling ClojureScript...
+   : Compiling "hello_my_output/main_file.js" from ["src"]...
+   : Successfully compiled "hello_my_output/main_file.js" in 1.129 seconds.
+
+** reopen in browser...
+
+   and confirm that =jQuery= is properly included
+
+   

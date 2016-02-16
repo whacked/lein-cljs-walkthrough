@@ -28,7 +28,7 @@ In reality you only run the commands in between, i.e. =lein cljsbuild once=:
   #+RESULTS:
   : 'cljsbuild' is not a task. See 'lein help'.
 
-** update [[project.clj]] with minimal cljsbuild dependencies
+** update [[file:project.clj]] with minimal cljsbuild dependencies
 
    #+BEGIN_SRC sh
    lein cljsbuild once
@@ -119,7 +119,7 @@ In reality you only run the commands in between, i.e. =lein cljsbuild once=:
 
 * add jQuery via =lein-npm= and =:foreign-libs=
 
-** add lein-npm plugin to [[project.clj]]
+** add lein-npm plugin to [[file:project.clj]]
 
 ** install jquery using =lein npm=
 
@@ -130,4 +130,4 @@ In reality you only run the commands in between, i.e. =lein cljsbuild once=:
    #+RESULTS:
    : jquery@2.2.0 node_modules/jquery
 
-   
+   now we want to reference it in [[file:src/cljs/something_something/core.cljs]]

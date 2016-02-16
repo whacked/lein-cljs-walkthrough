@@ -1,0 +1,13 @@
+#+PROPERTY: header-args:sh :eval never :results output
+
+* init
+
+#+BEGIN_SRC sh
+lein new lein-cljs-walkthrough
+#+END_SRC
+#+RESULTS:
+: Generating a project called lein-cljs-walkthrough based on the 'default' template.
+: The default template is intended for library projects, not applications.
+: To see other templates (app, plugin, etc), try `lein help new`.
+
+

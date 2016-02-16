@@ -117,4 +117,17 @@ In reality you only run the commands in between, i.e. =lein cljsbuild once=:
     </html>
 #+end_example
 
-    
+* add jQuery via =lein-npm= and =:foreign-libs=
+
+** add lein-npm plugin to [[project.clj]]
+
+** install jquery using =lein npm=
+
+   #+BEGIN_SRC sh
+   lein npm install jquery
+   #+END_SRC
+
+   #+RESULTS:
+   : jquery@2.2.0 node_modules/jquery
+
+   

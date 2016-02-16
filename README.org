@@ -1,4 +1,4 @@
-#+PROPERTY: header-args:sh :eval never :results output
+#+PROPERTY: header-args:sh :results output
 
 * init
 
@@ -10,4 +10,17 @@ lein new lein-cljs-walkthrough
 : The default template is intended for library projects, not applications.
 : To see other templates (app, plugin, etc), try `lein help new`.
 
+* adding cljsbuild dependencies
+
+  at this point =cljsbuild= does nothing (note the =exec...:= block is used to redirect STDERR so the output gets captured.
+In reality you only run the commands in between, i.e. =lein cljsbuild once=:
+
+  #+BEGIN_SRC sh
+  exec 2>&1
+  lein cljsbuild once
+  :
+  #+END_SRC
+
+  #+RESULTS:
+  : 'cljsbuild' is not a task. See 'lein help'.
 
